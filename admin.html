@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<title></title>
+</head>
+<body>
+	<style>
+		body {
+			background: black;
+			color: Chartreuse ;
+		}
+		textarea {
+			background: DarkSlateGray ;
+			height: 80vh;
+			width: 95vw;
+			color: Chartreuse ;
+		}
+	</style>
+<main>
+<div> add|category|id|name|img|price|description <br> delete|category|id </div><br>
+<textarea v-model="console">
+	
+</textarea>
+<button @click="send">send</button>
+
+</main>
+<script>
+	
+const adminka = new Vue({
+	el: 'main',
+	data: {
+		console: '',
+	},
+	methods: {
+		send: function() {
+			const v = (adminka.console.split('|'))
+			if ( v[0] == 'add ' || v[0] == 'add') {
+				const add_obj = { id: v[2], name: v[3], img: v[4], price: v[5], description: v[6] }
+				console.log('+'+v[1] + '+ cat')
+				console.log(add_obj)
+
+
+					axios.post('/add', {
+							category: v[1],
+			    			add_obj: add_obj,
+			   		}).then(function (response) {
+	    				console.log(response.data)
+	 				})
+
+			} else {
+				const delete_obj = { id: v[2] }
+				console.log(v[1] + ' - cat')
+				console.log(delete_obj)
+
+					axios.post('/delete', {
+							category: v[1],
+			    			delete_obj: delete_obj,
+			   		}).then(function (response) {
+	    				console.log(response.data)
+	 				})
+
+			}
+		}
+	}
+})
+
+
+
+
+
+</script>
+</body>
+</html>
